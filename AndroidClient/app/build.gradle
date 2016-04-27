@@ -1,14 +1,23 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:/Users/dianyang/Documents/GitHub/hackathon-ocw/AndroidClient/keystore.jks')
+            storePassword "#Bugsfor\$" //你的store密码
+            keyAlias "keystore"  //别名
+            keyPassword "#Bugsfor\$"  //别名密码
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
     defaultConfig {
         applicationId "org.hackathon_ocw.androidclient"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "0.1.1.0"
     }
     buildTypes {
         release {
@@ -25,4 +34,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
+    compile files('libs/libammsdk.jar')
+    compile files('libs/acra-4.7.0.jar')
+    compile 'com.google.android.gms:play-services-analytics:8.1.0'
+    compile files('libs/volley.jar')
+    compile 'me.gujun.android.taggroup:library:1.4@aar'
+    compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }

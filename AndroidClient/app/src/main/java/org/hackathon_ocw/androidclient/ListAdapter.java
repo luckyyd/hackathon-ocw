@@ -1,7 +1,5 @@
 package org.hackathon_ocw.androidclient;
 
-import org.hackathon_ocw.androidclient.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -46,8 +44,53 @@ public class ListAdapter extends BaseAdapter {
         return position;
     }
 
-    public String getUrlbyPosition(int position) {
-        return data.get(position).get("url");
+    public String getVideoUrlbyPosition(int position) {
+        return data.get(position).get("videoUrl");
+    }
+
+    public String getWebUrlbyPosition(int position) {
+        return data.get(position).get("webUrl");
+    }
+
+    public String getTitlebyPosition(int position) {
+        return data.get(position).get("title");
+    }
+
+    public String getIdbyPosition(int position) {
+        if(data.size() <= position)
+        {
+            return  data.get(position-1).get("id");
+        }
+        else
+        {
+            return data.get(position).get("id");
+        }
+    }
+
+    public String getDiscriptionbyPosition(int position) {
+        return data.get(position).get("description");
+    }
+
+    public String getVideoImgbyPosition(int position){
+        return data.get(position).get("thumb_url");
+    }
+
+    public void clear()
+    {
+        data.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(ArrayList<HashMap<String, String>> d)
+    {
+        data = d;
+        notifyDataSetChanged();
+    }
+
+    public void append(ArrayList<HashMap<String, String>> d)
+    {
+        data.addAll(d);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -59,17 +102,27 @@ public class ListAdapter extends BaseAdapter {
         }
 
         TextView title = (TextView) vi.findViewById(R.id.title);
-        TextView teacher = (TextView) vi.findViewById(R.id.teacher);
-        TextView description = (TextView) vi.findViewById(R.id.description);
+        TextView videoOrElse = (TextView) vi.findViewById(R.id.videoOrElse);
+        TextView source = (TextView) vi.findViewById(R.id.source);
         ImageView thumb_image = (ImageView) vi.findViewById(R.id.pic_link);
-
+        ImageView durationImg = (ImageView) vi.findViewById(R.id.videoDurationImg);
 
         HashMap<String, String> course = new HashMap<String, String>();
         course = data.get(position);
 
         title.setText(course.get(MainActivity.KEY_TITLE));
-        teacher.setText(course.get(MainActivity.KEY_TEACHER));
-        description.setText(course.get(MainActivity.KEY_DESCRIPTION));
+        //source.setText(course.get(MainActivity.KEY_SOURCE));
+        source.setText(course.get(MainActivity.KEY_SCHOOL));
+
+        if(course.get(MainActivity.KEY_DURATION).equals(""))
+        {
+            videoOrElse.setText("---:---");
+            //durationImg.setVisibility(View.INVISIBLE);
+            //videoOrElse.setText(course.get(MainActivity.KEY_INSTRUCTOR));
+        }
+        else {
+            videoOrElse.setText(course.get(MainActivity.KEY_DURATION));
+        }
         imageLoader.DisplayImage(course.get(MainActivity.KEY_THUMB_URL), thumb_image);
 
         return vi;
